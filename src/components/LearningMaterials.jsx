@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 import FilterComponent from "./Filter";
-import { learningMaterials  } from "../data/learningMaterials";
+import { learningMaterials } from "../data/learningMaterials";
 import { useState } from "react";
 
 export default function LearningMaterialsComponent() {
@@ -15,6 +15,15 @@ export default function LearningMaterialsComponent() {
           : material
       )
     );
+  };
+  const formatDate = (date) => {
+    const options = {
+      weekday: "short",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Date(date).toLocaleDateString("en-US", options);
   };
 
   const handleSort = (sortedMaterials) => {
@@ -57,7 +66,9 @@ export default function LearningMaterialsComponent() {
                   className="cursor-pointer"
                 />
               </div>
-              <p className="text-gray-400 text-sm">{material.postedAt}</p>
+              <p className="text-gray-400 text-sm">
+                Posted at : {formatDate(material.postedAt)}
+              </p>
             </div>
           </div>
         ))}
