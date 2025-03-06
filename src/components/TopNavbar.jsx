@@ -4,7 +4,6 @@ export default function TopNavbarComponent({ onSearch }) {
   const handleSubmit = (e) => {
     // to prevent the page from reload
     e.preventDefault();
-    // get the search query
   };
   return (
     <div className="flex justify-between items-center">

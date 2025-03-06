@@ -1,11 +1,11 @@
 import { Star } from "lucide-react";
 import FilterComponent from "./Filter";
-import { learningMaterials as initialData } from "../data/learningMaterials";
+import { learningMaterials  } from "../data/learningMaterials";
 import { useState } from "react";
 
 export default function LearningMaterialsComponent() {
-  const [originalMaterials] = useState(initialData);
-  const [materials, setMaterials] = useState(initialData);
+  const [originalMaterials] = useState(learningMaterials);
+  const [materials, setMaterials] = useState(learningMaterials);
 
   const toggleFavorite = (id) => {
     setMaterials((prevMaterials) =>
