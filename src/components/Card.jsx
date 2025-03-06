@@ -11,9 +11,14 @@ const CardComponent = ({ cardProps }) => {
     const diffDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
     setDateCount(diffDays);
   }, []);
+  //format date mar,1,2000
+  const formatDate = (date) => {
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    return new Date(date).toLocaleDateString("en-US", options);
+  };
 
   return (
-    <div className="max-w-sm max-h-1/2 p-6 bg-white rounded-2xl shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
+    <div className="max-w-sm max-h-72 p-6 bg-white rounded-2xl shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
       <div className="flex justify-between mb-5">
         {/* date */}
         <p
@@ -29,7 +34,7 @@ const CardComponent = ({ cardProps }) => {
               : ""
           }
         >
-          {cardProps.dueDate}
+          {formatDate(cardProps.dueDate)}
         </p>
         <EllipsisVertical size={20} color="#374957" />
       </div>
@@ -37,8 +42,10 @@ const CardComponent = ({ cardProps }) => {
       <h5 className="capitalize mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
         {cardProps.name}
       </h5>
-      <p className="line-clamp-1 mb-3 font-normal text-justify text-gray-400 dark:text-gray-400">
-        {cardProps.description}
+      <p className="line-clamp-2 mb-3 font-normal text-justify text-gray-400 dark:text-gray-400">
+        {cardProps.description
+          ? cardProps.description
+          : `lorem ipsum dolor sit amet, consectetur adip non pro`}
       </p>
 
       {/* progress bar */}

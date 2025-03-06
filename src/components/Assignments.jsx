@@ -19,7 +19,7 @@ export default function Assignments() {
         <h2 className="text-xl font-semibold">Assignments</h2>
         <AddNewProjectComponent onAddCard={addCard} />
       </div>
-      <div className="grid grid-cols-2 gap-5 md:grid-cols-3 h-[500px] overflow-y-auto no-scrollbar">
+      <div className="grid grid-cols-2 gap-5 md:grid-cols-3 h-[62vh] overflow-y-auto no-scrollbar">
         {cards.map((data, index) => (
           <CardComponent key={index} cardProps={data} />
         ))}
