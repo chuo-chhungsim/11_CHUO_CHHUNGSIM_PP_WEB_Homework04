@@ -9,7 +9,7 @@ export default function DashboardComponent() {
         {dashboard.map((dashboard) => (
           <div
             key={dashboard.id}
-            className="flex bg-white gap-5 py-3.5 px-4 rounded-xl w-auto"
+            className="flex bg-white gap-5 py-3.5 px-4 rounded-xl w-full"
           >
             <div className={`p-3 rounded-xl ${dashboard.color}`}>
               <img src={dashboard.icon} alt="file icon" />

@@ -1,26 +1,47 @@
-export default function FilterComponent() {
-  // prevent the page from reload
-  const handleSubmit = (e) => {
-    e.preventDefault();
+import { useState } from "react";
+
+export default function FilterComponent({
+  materials,
+  originalMaterials,
+  onSort,
+}) {
+  const [sortOrder, setSortOrder] = useState("");
+
+  const handleSortChange = (e) => {
+    const order = e.target.value;
+    setSortOrder(order);
+
+    if (order === "") {
+      onSort(originalMaterials);
+      return;
+    }
+
+    let sortedMaterials = [...materials];
+    if (order === "A-Z") {
+      sortedMaterials.sort((a, b) => a.title.localeCompare(b.title));
+      console.log("A-Z");
+    } else if (order === "Z-A") {
+      sortedMaterials.sort((a, b) => b.title.localeCompare(a.title));
+      console.log("A-Z");
+    }
+    onSort(sortedMaterials);
   };
 
   return (
-    <form className="mt-4 mx-4 flex justify-between" onSubmit={handleSubmit}>
+    <div className="mt-4 mx-4 flex justify-between">
       <div className="relative w-full ">
         <select
           id="filterLearningMaterials"
+          value={sortOrder}
           name="filterLearningMaterials"
-          className="text-sm focus:ring-custom-sky-blue focus:border-custom-sky-blue block w-full p-4 focus:outline-none text-gray-400 border-none rounded-xl bg-light-gray"
+          className="cursor-pointer text-sm focus:ring-custom-sky-blue focus:border-custom-sky-blue block w-full p-4 focus:outline-none text-gray-400 border-none rounded-xl bg-light-gray"
+          onChange={handleSortChange}
         >
-          <option hidden value="">
-            Sort By
-          </option>
-          <optgroup label="Sort By">
-            <option value="A-Z">A-Z</option>
-            <option value="Z-A">Z-A</option>
-          </optgroup>
+          <option value="">Sort By</option>
+          <option value="A-Z">A-Z</option>
+          <option value="Z-A">Z-A</option>
         </select>
       </div>
-    </form>
+    </div>
   );
 }

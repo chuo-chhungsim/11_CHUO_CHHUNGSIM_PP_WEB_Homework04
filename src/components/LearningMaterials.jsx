@@ -4,10 +4,9 @@ import { learningMaterials as initialData } from "../data/learningMaterials";
 import { useState } from "react";
 
 export default function LearningMaterialsComponent() {
-  // Store learning materials in state
+  const [originalMaterials] = useState(initialData);
   const [materials, setMaterials] = useState(initialData);
 
-  // Toggle favorite status
   const toggleFavorite = (id) => {
     setMaterials((prevMaterials) =>
       prevMaterials.map((material) =>
@@ -18,18 +17,23 @@ export default function LearningMaterialsComponent() {
     );
   };
 
+  const handleSort = (sortedMaterials) => {
+    setMaterials(sortedMaterials);
+  };
+
   return (
     <div className="bg-white drop-shadow-lg rounded-2xl overflow-auto h-[80%] no-scrollbar">
-      {/* Calling filter component */}
-      <FilterComponent />
+      <FilterComponent
+        materials={materials}
+        originalMaterials={originalMaterials}
+        onSort={handleSort}
+      />
 
-      {/* Title */}
       <div className="p-4 flex justify-between items-center">
         <h2 className="text-xl font-semibold">Learning Materials</h2>
         <img src="/more.svg" alt="three dot" width={30} height={30} />
       </div>
 
-      {/* Materials list */}
       <div className="space-y-3 px-3">
         {materials.map((material) => (
           <div
@@ -38,7 +42,6 @@ export default function LearningMaterialsComponent() {
           >
             <img
               src={material.image}
-              alt={material.title}
               width={50}
               height={50}
               className="rounded-xl"

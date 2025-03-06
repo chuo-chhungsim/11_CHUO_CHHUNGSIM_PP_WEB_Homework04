@@ -3,6 +3,8 @@ import { useState } from "react";
 export default function AddNewProjectComponent({ onAddCard }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errors, setErrors] = useState({});
+  // const [dateCount, setDateCount] = useState();
+  const [dueDateError, setDueDateError] = useState("");
   const [formData, setFormData] = useState({
     projectName: "",
     projectDescription: "",
@@ -19,43 +21,57 @@ export default function AddNewProjectComponent({ onAddCard }) {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
     console.log([name], value);
   };
-  const handleFocus = () => {
-    setErrors({});
+  const handleFocus = (e) => {
+    const { name } = e.target;
+    setErrors((prevData) => ({ ...prevData, [name]: "" }));
+    if (e.target.name === "dueDate") setDueDateError("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
 
-    setErrors({});
     // Validation
     let isError = {};
     if (!formData.projectName) {
       isError.projectName = "Please enter a project name";
     }
-    if (!formData.projectProgress) {
-      isError.projectProgress = "Please enter a project progress";
+    if (!formData.projectProgress || formData.projectProgress === "") {
+      isError.projectProgress = "Please select project progress";
     }
+
+    const date = new Date(formData.dueDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    // if (formData.dueDate == "") {
+    //   setDueDateError("Please enter a date");
+    //   if (date < today) {
+    //     setDueDateError("Due date should be in the future");
+    //   }
+    // }
+    if (!formData.dueDate) {
+      console.log("no data");
+      setDueDateError("Please enter a date");
+    } else if (date < today) {
+      setDueDateError("Due date should be in the future");
+    }
+    // console.log(formData.dueDate == "");
+
     if (Object.keys(isError).length > 0) {
       setErrors(isError);
+      console.log("is error", isError);
       return;
     }
-
     onAddCard(formData);
 
+    setErrors({});
+    setDueDateError("");
     setFormData({
       projectName: "",
       projectDescription: "",
       dueDate: "",
       projectProgress: 0,
     });
-    setTimeout(() => {
-      isError.projectName = "";
-      isError.projectDescription = "";
-      isError.dueDate = "";
-      isError.projectProgress = "";
-    }, 1000);
-
     setIsModalOpen(false);
   };
 
@@ -142,18 +158,17 @@ export default function AddNewProjectComponent({ onAddCard }) {
                     </label>
                     <input
                       onChange={handleChange}
+                      onFocus={handleFocus}
                       type="date"
                       name="dueDate"
                       value={formData.dueDate}
-                      // onFocus={handleFocus}
                       id="dueDate"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     />
-                    {/* {formData.dueDate && (
-                      <p className="text-xs text-red-500 mt-1" id="error">
-                        {formData.dueDate} is not a valid date.
-                      </p>
-                    )} */}
+                    {/* {formData.dueDate && ( */}
+                    <p className="text-xs text-red-500 mt-1" id="error">
+                      {dueDateError}
+                    </p>
                   </div>
 
                   <div className="col-span-2">
@@ -171,7 +186,7 @@ export default function AddNewProjectComponent({ onAddCard }) {
                       id="progress"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     >
-                      <option>select progress</option>
+                      <option value="">select progress</option>
                       <option value="100">100</option>
                       <option value="75">75</option>
                       <option value="50">50</option>
