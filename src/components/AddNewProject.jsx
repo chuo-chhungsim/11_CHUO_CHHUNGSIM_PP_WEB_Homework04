@@ -34,12 +34,18 @@ export default function AddNewProjectComponent({ onAddCard }) {
     // Validation
     let isError = {};
     if (!formData.projectName) {
-      isError.projectName = "Please enter a project name";
+      isError.projectName = "*Please enter a project name";
     }
     if (!formData.projectProgress || formData.projectProgress === "") {
-      isError.projectProgress = "Please select project progress";
+      isError.projectProgress = "*Please select project progress";
     }
+    console.log(formData.dueDate == "");
 
+    if (Object.keys(isError).length > 0) {
+      setErrors(isError);
+      console.log("is error", isError);
+      return;
+    }
     const date = new Date(formData.dueDate);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -49,17 +55,14 @@ export default function AddNewProjectComponent({ onAddCard }) {
     //     setDueDateError("Due date should be in the future");
     //   }
     // }
+
     if (!formData.dueDate) {
       console.log("no data");
-      setDueDateError("Please enter a date");
+      setDueDateError("*Please enter a date");
+      return;
     } else if (date < today) {
-      setDueDateError("Due date should be in the future");
-    }
-    // console.log(formData.dueDate == "");
-
-    if (Object.keys(isError).length > 0) {
-      setErrors(isError);
-      console.log("is error", isError);
+      console.log("due date is in the past");
+      setDueDateError("*Due date should be in the future");
       return;
     }
     onAddCard(formData);

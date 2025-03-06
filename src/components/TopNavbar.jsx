@@ -1,9 +1,10 @@
 import { Bell, Search } from "lucide-react";
-export default function TopNavbarComponent() {
+export default function TopNavbarComponent({ onSearch }) {
   // handle on form submit
   const handleSubmit = (e) => {
     // to prevent the page from reload
     e.preventDefault();
+    // get the search query
   };
   return (
     <div className="flex justify-between items-center">
@@ -17,6 +18,7 @@ export default function TopNavbarComponent() {
         <input
           type="text"
           placeholder="Search assignment here"
+          onChange={(e) => onSearch(e.target.value)}
           className="w-full bg-white py-3 pl-14 pr-5 rounded-xl h-12 border-none focus:border-none focus:ring-0 focus:outline-custom-sky-blue"
         />
       </form>

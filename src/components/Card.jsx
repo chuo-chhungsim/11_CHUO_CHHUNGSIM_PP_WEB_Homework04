@@ -28,7 +28,7 @@ const CardComponent = ({ cardProps }) => {
               : cardProps.progress == 75
               ? `text-custom-yellow-500  font-bold`
               : cardProps.progress == 50
-              ? `text-custom-yellow font-bold`
+              ? `text-custom-carrot font-bold`
               : cardProps.progress == 25
               ? `text-custom-pink font-bold`
               : ""
@@ -39,7 +39,7 @@ const CardComponent = ({ cardProps }) => {
         <EllipsisVertical size={20} color="#374957" />
       </div>
 
-      <h5 className="capitalize mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+      <h5 className="line-clamp-1 capitalize mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
         {cardProps.name}
       </h5>
       <p className="line-clamp-2 mb-3 font-normal text-justify text-gray-400 dark:text-gray-400">
@@ -61,7 +61,7 @@ const CardComponent = ({ cardProps }) => {
               : cardProps.progress == 75
               ? `bg-custom-yellow-500 h-2.5 rounded-full w-[75%]`
               : cardProps.progress == 50
-              ? `bg-custom-yellow h-2.5 rounded-full w-[50%]`
+              ? `bg-custom-carrot h-2.5 rounded-full w-[50%]`
               : cardProps.progress == 25
               ? `bg-custom-pink h-2.5 rounded-full w-[25%]`
               : ""
